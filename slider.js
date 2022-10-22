@@ -17,15 +17,13 @@ function slider({
     slides = document.querySelectorAll(slide),
     slider = document.querySelector(container),
     slidesWrapper = document.querySelector(wrapper),
-    slidesField = document.querySelector(field), // блок в которое поместим все слайды в ширину
-    width = window.getComputedStyle(slidesWrapper).width; // получили ширину окошка просмотра слайда
+    slidesField = document.querySelector(field),
+    width = window.getComputedStyle(slidesWrapper).width; 
 
   let slideIndex = 1;
 
-  // ================ SLIDER 2  типа КАРУСЕЛЬ
-  let offset = 0; //ориентир отступа ширини для показа нужного слайда (смищение блока с слайдами)
-
-  // нумерация
+  let offset = 0;
+  
   if (slides.length < 10) {
     total.textContent = `0${slides.length}`;
   } else {
@@ -37,14 +35,14 @@ function slider({
     current.textContent = slideIndex;
   }
 
-  slidesField.style.width = 100 * slides.length + "%"; //увеличили ширину чтоб поместились все слайды в ширину
-  slidesField.style.display = "flex"; // расположили слайды в одну линию
-  slidesField.style.transition = "0.5s all"; // чтобы плавно передвигалось
+  slidesField.style.width = 100 * slides.length + "%"; 
+  slidesField.style.display = "flex"; 
+  slidesField.style.transition = "0.5s all";
 
-  slidesWrapper.style.overflow = "hidden"; //скрываем все что выходит за окошко
+  slidesWrapper.style.overflow = "hidden";
 
   slides.forEach((item) => {
-    item.style.width = width; //точно знаем что все слайды равны нашему окошку
+    item.style.width = width; 
   });
 
   function deleteNotDigits(str) {
@@ -52,17 +50,15 @@ function slider({
   }
 
   next.addEventListener("click", () => {
-    //сейчас в width лежит строка ('400px') нужно перевести в число + отрезать 'px'
     if (offset == deleteNotDigits(width) * (slides.length - 1)) {
-      //заменил буквы на 'ничего'
-      offset = 0; //долистал до конца переmотка в начало
+      offset = 0; 
     } else {
-      offset += deleteNotDigits(width); // если норм то ориентир увеличиваенся на ширину еще 1 слайда
+      offset += deleteNotDigits(width);
     }
 
-    slidesField.style.transform = `translateX(-${offset}px)`; //сдвигание блока в лево (минусоввое значение = лево)
+    slidesField.style.transform = `translateX(-${offset}px)`; 
 
-    //numbers
+    
     if (slideIndex == slides.length) {
       slideIndex = 1;
     } else {
@@ -81,14 +77,14 @@ function slider({
   });
 
   prev.addEventListener("click", () => {
-    //сейчас в prev лежит строка ('400px') нужно перевести в число + отрезать 'px'
+    
     if (offset == 0) {
-      offset = deleteNotDigits(width) * (slides.length - 1); //долистал до начала перезод в конуц
+      offset = deleteNotDigits(width) * (slides.length - 1);
     } else {
-      offset -= deleteNotDigits(width); // если норм то ориентир уменьшается на ширину еще 1 слайда
+      offset -= deleteNotDigits(width); 
     }
 
-    slidesField.style.transform = `translateX(-${offset}px)`; //сдвигание блока в лево (минусоввое значение = лево)
+    slidesField.style.transform = `translateX(-${offset}px)`;
 
     //numbers
     if (slideIndex == 1) {
@@ -111,7 +107,6 @@ function slider({
   // navigations dot of slider
 
   slider.style.position = "relative";
-  // блок для точек
   const indicators = document.createElement("ol"),
     dots = [];
   indicators.classList.add("carousel-indicators");
@@ -129,10 +124,9 @@ function slider({
 `;
   slider.append(indicators);
 
-  // точки (сколько слайдов столько и точек)
   for (let i = 0; i < slides.length; i++) {
     const dot = document.createElement("li");
-    dot.setAttribute("data-slide-to", i + 1); // устанавлеваем каждой точке свой атрибут(идентификатор)
+    dot.setAttribute("data-slide-to", i + 1); 
     dot.style.cssText = `
     box-sizing: content-box;
     flex: 0 1 auto;
@@ -177,44 +171,5 @@ function slider({
     });
   });
 
-  // ======== slider 1 ОБЫЧНЫЙ СЛАЙДЕР
-
-  // showSlides(slideIndex);
-
-  // if (slides.length < 10) {
-  //   total.textContent = `0${slides.length}`;
-  // } else {
-  //   total.textContent = slides.length;
-  // }
-
-  // function showSlides(n) {
-  //   if (n > slides.length) {
-  //     slideIndex = 1;
-  //   }
-  //   if (n < 1) {
-  //     slideIndex = slides.length;
-  //   }
-
-  //   slides.forEach((item) => (item.style.display = "none"));
-  //   slides[slideIndex - 1].style.display = "block";
-
-  //   if (slideIndex < 10) {
-  //     current.textContent = `0${slideIndex}`;
-  //   } else {
-  //     current.textContent = slideIndex;
-  //   }
-  // }
-
-  // function plusSlides(n) {
-  //   showSlides((slideIndex += n));
-  // }
-
-  // prev.addEventListener("click", () => {
-  //   plusSlides(-1);
-  // });
-  // next.addEventListener("click", () => {
-  //   plusSlides(1);
-  // });
-}
-
-export default slider;
+  
+//export default slider;
