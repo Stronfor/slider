@@ -10,20 +10,20 @@ function slider({
 }) {
   //// SLIDER
 
-  const prev = document.querySelector(prevArrow),
+  const slides = document.querySelectorAll(slide),
+    slider = document.querySelector(container),
+    prev = document.querySelector(prevArrow),
     next = document.querySelector(nextArrow),
     current = document.querySelector(currentCounter),
     total = document.querySelector(totalCounter),
-    slides = document.querySelectorAll(slide),
-    slider = document.querySelector(container),
     slidesWrapper = document.querySelector(wrapper),
     slidesField = document.querySelector(field),
-    width = window.getComputedStyle(slidesWrapper).width; 
+    width = window.getComputedStyle(slidesWrapper).width;
 
   let slideIndex = 1;
 
   let offset = 0;
-  
+
   if (slides.length < 10) {
     total.textContent = `0${slides.length}`;
   } else {
@@ -35,14 +35,14 @@ function slider({
     current.textContent = slideIndex;
   }
 
-  slidesField.style.width = 100 * slides.length + "%"; 
-  slidesField.style.display = "flex"; 
+  slidesField.style.width = 100 * slides.length + "%";
+  slidesField.style.display = "flex";
   slidesField.style.transition = "0.5s all";
 
   slidesWrapper.style.overflow = "hidden";
 
   slides.forEach((item) => {
-    item.style.width = width; 
+    item.style.width = width;
   });
 
   function deleteNotDigits(str) {
@@ -51,14 +51,13 @@ function slider({
 
   next.addEventListener("click", () => {
     if (offset == deleteNotDigits(width) * (slides.length - 1)) {
-      offset = 0; 
+      offset = 0;
     } else {
       offset += deleteNotDigits(width);
     }
 
-    slidesField.style.transform = `translateX(-${offset}px)`; 
+    slidesField.style.transform = `translateX(-${offset}px)`;
 
-    
     if (slideIndex == slides.length) {
       slideIndex = 1;
     } else {
@@ -77,11 +76,10 @@ function slider({
   });
 
   prev.addEventListener("click", () => {
-    
     if (offset == 0) {
       offset = deleteNotDigits(width) * (slides.length - 1);
     } else {
-      offset -= deleteNotDigits(width); 
+      offset -= deleteNotDigits(width);
     }
 
     slidesField.style.transform = `translateX(-${offset}px)`;
@@ -126,7 +124,7 @@ function slider({
 
   for (let i = 0; i < slides.length; i++) {
     const dot = document.createElement("li");
-    dot.setAttribute("data-slide-to", i + 1); 
+    dot.setAttribute("data-slide-to", i + 1);
     dot.style.cssText = `
     box-sizing: content-box;
     flex: 0 1 auto;
@@ -170,6 +168,5 @@ function slider({
       }
     });
   });
-
-  
+}
 //export default slider;
